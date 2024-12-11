@@ -1,14 +1,22 @@
 # Nåidd
 Nåidd is a domestic server project. Currently a work in progress, it is envisioned as base for a home-based server running limitted functions from web-hosting to personal projects. The ultimate goal is to be able to run such a simple deployment in any old hardware that one might have at home, as long as it can run Linux and have basic capabilities.
 
+
 ## Seting up the repo
 This build requires python 3.10 and docker version 27.2.
 1. **Set dependencies and venv**
+    
     On Linux/WSL use:
+    
         python -m venv venv
+    
         source venv/bin/activate
+    
         pip install -r requirements.txt
+
+
 2. **Manage secrets**
+
     Add .env file in the root directory.
 
 

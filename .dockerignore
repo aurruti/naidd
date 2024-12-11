@@ -2,3 +2,7 @@ venv/
 node_modules
 .git
 *.log
+.dockerignore
+Dockerfile
+docker-compose.yml
+scripts/update.sh
