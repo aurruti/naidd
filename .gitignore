@@ -1,4 +1,6 @@
 venv/
+
 scripts/logs/*
+!scripts/logs/dummy.txt
 
 .env

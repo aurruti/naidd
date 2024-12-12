@@ -12,7 +12,8 @@ cd "$SCRIPT_DIR" || exit 1
 ## A temp solution is this one, or even one where the diff is checked before actually merging.
 
 # Pull from repo (no access token needed)
-git pull origin main
+git pull origin main || { echo "Failed to pull from origin main." >> /scripts/logs/naidd-update.log; exit 1; }
+
 
 # (WIP) Check if changes require a rebuild
 if git diff --quiet HEAD -- '*.Dockerfile' '*/package.json'; then
