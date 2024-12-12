@@ -21,4 +21,4 @@ jobs:
 
     - name: Build Docker Image
       run: |
-        docker build -t scripts-app .
+        docker build -t scripts-app -f docker/scripts.Dockerfile .
