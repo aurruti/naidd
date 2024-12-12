@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "$(date) Running naidd-update.sh." >> /scripts/naidd-update.log
 
 # Assumes update.sh is in the repo root or nearby
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -15,10 +16,11 @@ git pull origin main
 
 # (WIP) Check if changes require a rebuild
 if git diff --quiet HEAD Dockerfile package.json; then
-    echo "No changes to Dockerfile or package.json, skipping rebuild."
+    echo "No changes to Dockerfile and/or package.json, skipping rebuild."  >> /scripts/naidd-update.log
 else
-    echo "Changes detected in Dockerfile or package.json, rebuilding."
+    echo "Changes detected in Dockerfile and/or package.json, rebuilding."  >> /scripts/naidd-update.log
     docker-compose build
-    echo "Restarting containers."
+    echo "Restarting containers."  >> /scripts/naidd-update.log
     docker-compose restart
+    echo "Restart success."  >> /scripts/naidd-update.log
 fi

@@ -1,14 +1,27 @@
 version: '3.8'
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - SECRET_KEY=${SECRET_KEY}
 
+  # Self-update scripts container
+  scripts:
+    build:
+      context: ./  
+      dockerfile: ./docker/scripts.Dockerfile
     volumes:
-      - .:/app
+      - ./scripts:/scripts
     restart: always
+
+  # Website container
+  # website:
+  #   build: 
+  #     context: ./
+  #     dockerfile: ./docker/website.Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - SECRET_KEY=${SECRET_KEY}
+
+  #   volumes:
+  #     - ./website:/app
+  #   restart: always
