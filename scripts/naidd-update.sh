@@ -1,12 +1,10 @@
 #!/bin/bash
 
-LOG_FILE="scripts/logs/naidd-update.log"
+LOG_FILE="/scripts/logs/naidd-update.log"
 echo "$(date) Running naidd-update.sh." >> "$LOG_FILE"
 
-# Identify the directory containing the script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 # Locate the .git directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ -d "$SCRIPT_DIR/.git" ]; then
     GIT_DIR="$SCRIPT_DIR/.git"
 elif [ -d "/scripts/.git" ]; then
