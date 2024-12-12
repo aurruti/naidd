@@ -7,7 +7,9 @@ services:
       context: ./scripts  
       dockerfile: scripts.Dockerfile
     volumes:
+      - ./.git:/scripts/.git
       - ./scripts:/scripts
+    working_dir: /scripts
     restart: always
 
   # Website container
