@@ -1,7 +1,15 @@
 #!/bin/bash
 
-LOG_FILE="${LOG_DIR:-/scripts/logs}/naidd-update.log"
+# File structure: naidd-update is in root-repo/scripts/
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+LOG_FILE="${SCRIPT_DIR}/logs/naidd-update.log"
+DOCKER_COMPOSE_FILE="${REPO_ROOT}/docker-compose.yml"
 echo "$(date) Running naidd-update.sh." >> "$LOG_FILE"
+
+# Correctly set Git environment
+export GIT_DIR="${REPO_ROOT}/.git"
+export GIT_WORK_TREE="${REPO_ROOT}"
 
 # .git directory is given by enviornment variable
 if [ -z "$GIT_DIR" ] || [ -z "$GIT_WORK_TREE" ]; then
@@ -13,14 +21,17 @@ fi
 ## It is better to use a webhook to trigger the update. But that is a problem for future me.
 ## A temp solution is this one, or even one where the diff is checked before actually merging.
 
-# Pull from repo (no access token needed)
-git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
+# Fetch from repo (no access token needed)
+git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FILE"; exit 1; }
 
 # Are changes significant?
-if git diff --quiet HEAD -- '*.Dockerfile' '*/package.json' 'docker-compose.yml'; then
+if git diff --quiet HEAD origin/main -- '*.Dockerfile' '*/package.json' 'docker-compose.yml'; then
+    git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
     echo "No significant changes, skipping rebuild." >> "$LOG_FILE"
     exit 0
 fi
+
+git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
 
 echo "Changes detected, starting deployment process." >> "$LOG_FILE"
 
@@ -28,16 +39,16 @@ echo "Changes detected, starting deployment process." >> "$LOG_FILE"
 # docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
 
 # Pull and build
-docker-compose pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-docker-compose build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
-docker-compose stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
-docker-compose rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
 
 echo "Starting new containers." >> "$LOG_FILE"
-docker-compose up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
 
 # TO-DO Health check
 # sleep 10  # Give containers time to start

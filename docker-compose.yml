@@ -1,22 +1,6 @@
 version: '3.8'
 services:
 
-  # Self-update scripts container
-  scripts:
-    build:
-      context: ./scripts  
-      dockerfile: scripts.Dockerfile
-    volumes:
-      - ./scripts:/scripts
-      - ./.git:/scripts/.git
-      - ./scripts/logs:/scripts/logs
-      - /var/run/docker.sock:/var/run/docker.sock # Added Docker socket SHOULD BE REMOVED, REPLACED BY A WEBHOOK
-    environment:
-      - GIT_DIR=/scripts/.git
-      - GIT_WORK_TREE=/scripts
-      - LOG_DIR=/scripts/logs
-    restart: always
-
   # Website container
   website:
     build: 
