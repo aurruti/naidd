@@ -13,6 +13,9 @@ RUN find /scripts -name "*.sh" -exec sh -c 'echo "32 * * * * {}" > /etc/cron.d/$
 RUN chmod 0644 /etc/cron.d/*.job
 RUN find /etc/cron.d -name "*.job" -exec crontab {} \;
 
+# Ensure log directory exists and is writable
+RUN mkdir -p /scripts/logs
+RUN chmod 777 /scripts/logs
 
 # Command to run the server
 CMD ["sh", "-c", "cron && tail -f /dev/null"]

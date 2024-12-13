@@ -1,25 +1,13 @@
 #!/bin/bash
 
-LOG_FILE="/scripts/logs/naidd-update.log"
+LOG_FILE="${LOG_DIR:-/scripts/logs}/naidd-update.log"
 echo "$(date) Running naidd-update.sh." >> "$LOG_FILE"
 
-# Locate the .git directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ -d "$SCRIPT_DIR/.git" ]; then
-    GIT_DIR="$SCRIPT_DIR/.git"
-elif [ -d "/scripts/.git" ]; then
-    GIT_DIR="/scripts/.git"
-elif [ -d "$SCRIPT_DIR/../.git" ]; then
-    GIT_DIR="$SCRIPT_DIR/../.git"
-else
-    echo "$(date) .git directory not found." >> "$LOG_FILE"
+# .git directory is given by enviornment variable
+if [ -z "$GIT_DIR" ] || [ -z "$GIT_WORK_TREE" ]; then
+    echo "Error in setting git environment." >> "$LOG_FILE"
     exit 1
 fi
-
-# Set Git to use the located .git directory
-export GIT_DIR="$GIT_DIR"
-export GIT_WORK_TREE="$SCRIPT_DIR"
-
 
 ## NOTE: the current script is NOT efficient: it is pulling constantly.
 ## It is better to use a webhook to trigger the update. But that is a problem for future me.
@@ -28,13 +16,33 @@ export GIT_WORK_TREE="$SCRIPT_DIR"
 # Pull from repo (no access token needed)
 git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
 
-# (WIP) Check if changes require a rebuild
-if git diff --quiet HEAD -- '*.Dockerfile' '*/package.json'; then
-    echo "No changes to any .Dockerfile or package.json, skipping rebuild."  >> "$LOG_FILE"
-else
-    echo "Changes detected in Dockerfile and/or package.json, rebuilding."  >> "$LOG_FILE"
-    docker-compose build || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
-    echo "Restarting containers."  >> "$LOG_FILE"
-    docker-compose restart || { echo "Failed to restart containers." >> "$LOG_FILE"; exit 1; }
-    echo "Restart success."  >> "$LOG_FILE"
+# Are changes significant?
+if git diff --quiet HEAD -- '*.Dockerfile' '*/package.json' 'docker-compose.yml'; then
+    echo "No significant changes, skipping rebuild." >> "$LOG_FILE"
+    exit 0
 fi
+
+echo "Changes detected, starting deployment process." >> "$LOG_FILE"
+
+# TO-DO Backup current container list for potential rollback
+# docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
+
+# Pull and build
+docker-compose pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+docker-compose build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+
+# Deploy
+echo "Stopping and removing old containers." >> "$LOG_FILE"
+docker-compose down --remove-orphans || { echo "Failed removal of old containers." >> "$LOG_FILE"; exit 1; }
+
+echo "Starting new containers." >> "$LOG_FILE"
+docker-compose up -d || { echo "Failed deployment of new containers." >> "$LOG_FILE"; exit 1; }
+
+# TO-DO Health check
+# sleep 10  # Give containers time to start
+# docker-compose ps
+# docker-compose ps | grep -q '(healthy)' || { echo "Containers not healthy" >> "$LOG_FILE"; exit 1; }
+
+# Cleanup
+docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE" 
+echo "Deployment successful." >> "$LOG_FILE"
