@@ -1,11 +1,20 @@
 FROM node:20
+
+# Dependencies for scripts
+RUN apt-get update
+RUN apt-get install -y \
+    git \
+    cron \
+    curl
+
+# Install Docker Compose
+RUN curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose
+
 WORKDIR /scripts
 
 # Copies
 COPY . /scripts
-
-# Dependencies for scripts
-RUN apt-get update && apt-get install -y cron
 
 # Scripts running and crontab
 RUN chmod +x *.sh
