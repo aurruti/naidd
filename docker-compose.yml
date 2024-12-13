@@ -10,6 +10,7 @@ services:
       - ./scripts:/scripts
       - ./.git:/scripts/.git
       - ./scripts/logs:/scripts/logs
+      - /var/run/docker.sock:/var/run/docker.sock # Added Docker socket SHOULD BE REMOVED, REPLACED BY A WEBHOOK
     environment:
       - GIT_DIR=/scripts/.git
       - GIT_WORK_TREE=/scripts

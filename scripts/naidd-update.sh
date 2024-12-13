@@ -33,10 +33,11 @@ docker-compose build --no-cache || { echo "Failed to build containers." >> "$LOG
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
-docker-compose down --remove-orphans || { echo "Failed removal of old containers." >> "$LOG_FILE"; exit 1; }
+docker-compose stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
+docker-compose rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
 
 echo "Starting new containers." >> "$LOG_FILE"
-docker-compose up -d || { echo "Failed deployment of new containers." >> "$LOG_FILE"; exit 1; }
+docker-compose up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
 
 # TO-DO Health check
 # sleep 10  # Give containers time to start
