@@ -7,11 +7,11 @@ services:
       context: ./website
       dockerfile: website.Dockerfile
     ports:
-      - "3000:3000"
+      - "8080:80"
     # environment:
     #   - DB_HOST=${DB_HOST}
     #   - DB_PORT=${DB_PORT}
     #   - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./website:/website
-    restart: always
+    restart: unless-stopped
