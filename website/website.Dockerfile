@@ -10,7 +10,7 @@ RUN npm run build
 
 FROM nginx:alpine
 
-COPY --from=build /website/build /usr/share/ngix/html
+COPY --from=build /website/build /usr/share/ngnix/html
 
 EXPOSE 80
 
