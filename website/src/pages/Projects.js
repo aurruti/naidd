@@ -15,17 +15,16 @@ export default function ProjectsPage() {
     }, [i18n]);
 
     useEffect(() => {
-        document.title = t('construction.title');
+        document.title = t('projects.title');
     });
 
     return (
         <div style={styles.app} className="App">
-            <h1 style={styles.h1}>{t('construction.title')}</h1>
-            <p style={styles.p}>{t('construction.subtitle')}</p>
+            <h1 style={styles.h1}>{t('projects.title')}</h1>
+            <p style={styles.p}>{t('projects.subtitle')}</p>
             <div style={{ height: '60px' }} />
             <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
                 <PageButton text={t('construction.home')} link="/" />
-                <PageButton text={t('construction.projects')} link="/projects" />
             </div>
         </div>
     );
