@@ -2,5 +2,10 @@
     "construction": {
         "title": "Pàgina en construcció",
         "subtitle": "Torneu aviat :)"
+    },
+    "languages": {
+        "language": "Idioma",
+        "ca": "Català",
+        "en": "Anglès"
     }
 }

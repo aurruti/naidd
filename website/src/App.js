@@ -1,20 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import LangButton from './components/lang.js';
+import LangMenu from './components/LangMenu.js';
+import './App.css';
 
-export default function App() {
+export default function UnderConstruction() {
   const t = useTranslation().t;
+
+  useEffect(() => {
+    document.title = t('construction.title');
+  });
+
   return (
-    <div>
-      <div className="App">
+    <div style={styles.globalBackground}>
+      <div style={styles.langButtonContainer}>
+        <LangMenu />
+      </div>
+      <div style={styles.app} className="App">
         <h1>{t('construction.title')}</h1>
         <p>{t('construction.subtitle')}</p>
-      </div>
-      <div>
-        <LangButton />
       </div>
     </div>
   );
 }
 
 
+const styles = {
+  globalBackground: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingTop: '20px',
+    paddingBottom: '10px',
+    //backgroundColor: 'red',
+  },
+  app: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    padding: '70px',
+  },
+  langButtonContainer: {
+    position: 'absolute',
+  },
+  h1: {
+    color: '#333',
+    fontSize: '3rem',
+  },
+  p: {
+    color: '#666',
+    fontSize: '1.5rem',
+  },
+};

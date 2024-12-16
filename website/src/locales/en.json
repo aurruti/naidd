@@ -2,5 +2,10 @@
     "construction": {
         "title": "Webpage under construction",
         "subtitle": "Come back soon :)"
+    },
+    "languages": {
+        "language": "Language",
+        "ca": "Catalan",
+        "en": "English"
     }
 }
