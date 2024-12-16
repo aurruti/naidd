@@ -1,30 +1,27 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import LangMenu from '../components/LangMenu.js';
-import '../styles/App.css';
 
-
-export default function UnderConstruction() {
+export default function ProjectsPage() {
     const t = useTranslation().t;
-  
+
     useEffect(() => {
-      document.title = t('construction.title');
+        document.title = t('construction.title');
     });
-  
+
     return (
-      <div style={styles.globalBackground}>
-        <div style={styles.langButtonContainer}>
-          <LangMenu />
+        <div style={styles.globalBackground}>
+            <div style={styles.langButtonContainer}>
+            <LangMenu />
+            </div>
+            <div style={styles.app} className="App">
+            <h1 style={styles.h1}>{t('construction.title')}</h1>
+            <p style={styles.p}>{t('construction.subtitle')}</p>
+            </div>
         </div>
-        <div style={styles.app} className="App">
-          <h1 style={styles.h1}>{t('construction.title')}</h1>
-          <p style={styles.p}>{t('construction.subtitle')}</p>
-        </div>
-      </div>
     );
 }
-  
-  
+
 const styles = {
     globalBackground: {
         alignItems: 'flex-start',
@@ -54,3 +51,7 @@ const styles = {
         fontSize: '1.5rem',
     },
 };
+
+
+
+
