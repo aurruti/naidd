@@ -30,7 +30,7 @@ const styles = {
     justifyContent: 'flex-start',
     paddingTop: '20px',
     paddingBottom: '10px',
-    //backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   app: {
     display: 'flex',
@@ -38,10 +38,11 @@ const styles = {
     justifyContent: 'center',
     textAlign: 'center',
     alignItems: 'center',
-    padding: '70px',
+    padding: '80px',
   },
   langButtonContainer: {
     position: 'absolute',
+    paddingTop: '20px',
   },
   h1: {
     color: '#333',
