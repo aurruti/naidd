@@ -1,11 +1,17 @@
 {
     "construction": {
         "title": "Webpage under construction",
-        "subtitle": "Come back soon :)"
+        "subtitle": "Come back soon :)",
+        "home": "Back to home",
+        "projects": "Projects"
     },
     "languages": {
         "language": "Language",
         "ca": "Catalan",
         "en": "English"
+    },
+    "404": {
+        "title": "Oops! This doesn't look right...",
+        "subtitle": "It seems the page you are looking for does not exist."
     }
 }

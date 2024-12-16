@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./LangMenu.css";
 import { useTranslation } from "react-i18next";
 import { FaAngleRight, FaAngleDown } from "react-icons/fa6";
@@ -8,9 +8,13 @@ import { getLangColor, CurrentLangColor } from "../fun/langColor";
 
 function DropItem(langname, lng) {
     const { i18n } = useTranslation();
-    const changeLanguage = (lng) => i18n.changeLanguage(lng);
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+        localStorage.setItem('i18nextLng', lng);
+    };
+    
     const langColor = getLangColor(lng);
-    const [hover, setHover] = React.useState(false);
+    const [hover, setHover] = useState(false);
 
     return (
         <button
@@ -32,18 +36,26 @@ function DropItem(langname, lng) {
 
 
 export default function LangMenu() {
-    const t = useTranslation().t;
-    const [showDropdown, setShowDropdown] = React.useState(false);
-    const [menuHover, setMenuHover] = React.useState(false);
+    const { i18n } = useTranslation();
+    const t = i18n.t;
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [menuHover, setMenuHover] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('i18nextLng');
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+        }
+    }, [i18n]);
+
+    useEffect(() => {
         if (!menuHover) {
             const timer = setTimeout(() => {
                 setShowDropdown(false);
             }, 2000);
             return () => clearTimeout(timer);
         }
-    }, [menuHover]);
+    }, [menuHover, i18n]);
 
     return (
         <div style={{ ...styles.langButtonContainer, width: showDropdown ? 160 : 75}}

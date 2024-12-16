@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import '../styles/App.css';
+import '../../styles/App.css';
 
-import PageButton from '../components/PageButton';
+import PageButton from '../../components/PageButton';
 
-export default function UnderConstruction() {
+export default function NotFound() {
     const { i18n } = useTranslation();
     const t = i18n.t;
     
@@ -16,13 +16,14 @@ export default function UnderConstruction() {
     }, [i18n]);
   
     useEffect(() => {
-      document.title = t('construction.title');
+      document.title = t('404.title');
     });
+
   
     return (
         <div style={styles.app} className="App">
-            <h1 style={styles.h1}>{t('construction.title')}</h1>
-            <p style={styles.p}>{t('construction.subtitle')}</p>
+            <h1 style={styles.h1}>{t('404.title')}</h1>
+            <p style={styles.p}>{t('404.subtitle')}</p>
             <div style={{ height: '60px' }} />
             <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
                 <PageButton text={t('construction.home')} link="/" />

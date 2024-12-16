@@ -5,6 +5,8 @@ import LangMenu from './components/LangMenu';
 import UnderConstruction from './pages/UnderConstruction';
 import ProjectsPage from './pages/Projects';
 
+import NotFound from './pages/error-pages/404';
+
 export default function App () {
   return (
     <Router>
@@ -15,6 +17,7 @@ export default function App () {
           <Routes>
             <Route path="/" element={<UnderConstruction />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
     </Router>

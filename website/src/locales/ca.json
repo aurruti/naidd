@@ -1,11 +1,17 @@
 {
     "construction": {
         "title": "Pàgina en construcció",
-        "subtitle": "Torneu aviat :)"
+        "subtitle": "Torneu aviat :)",
+        "home": "Torna a l'inici",
+        "projects": "Projectes"
     },
     "languages": {
         "language": "Idioma",
         "ca": "Català",
         "en": "Anglès"
+    },
+    "404": {
+        "title": "Ep! Alguna cosa no ha anat bé...",
+        "subtitle": "Sembla que la pàgina que busques no existeix."
     }
 }

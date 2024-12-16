@@ -1,8 +1,18 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import PageButton from '../components/PageButton';
+
 export default function ProjectsPage() {
-    const t = useTranslation().t;
+    const { i18n } = useTranslation();
+    const t = i18n.t;
+    
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('i18nextLng');
+        if (savedLanguage) {
+            i18n.changeLanguage(savedLanguage);
+        }
+    }, [i18n]);
 
     useEffect(() => {
         document.title = t('construction.title');
@@ -12,6 +22,11 @@ export default function ProjectsPage() {
         <div style={styles.app} className="App">
             <h1 style={styles.h1}>{t('construction.title')}</h1>
             <p style={styles.p}>{t('construction.subtitle')}</p>
+            <div style={{ height: '60px' }} />
+            <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
+                <PageButton text={t('construction.home')} link="/" />
+                <PageButton text={t('construction.projects')} link="/projects" />
+            </div>
         </div>
     );
 }
