@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./LangMenu.css";
 import { useTranslation } from "react-i18next";
+import { motion } from 'framer-motion';
 import { FaAngleRight, FaAngleDown } from "react-icons/fa6";
 import { MdLanguage } from "react-icons/md";
 
@@ -55,7 +56,7 @@ export default function LangMenu() {
             }, 2000);
             return () => clearTimeout(timer);
         }
-    }, [menuHover, i18n]);
+    }, [menuHover]);
 
     return (
         <div style={{ ...styles.langButtonContainer, width: showDropdown ? 160 : 75}}
@@ -64,6 +65,27 @@ export default function LangMenu() {
         >
             <div style={styles.dropdownStripContainer}>
                 <div style={{ ...styles.dropdownStripContainer, backgroundColor: CurrentLangColor()}}>
+                    <motion.div
+                        animate={{ x: 0, width: '100%' }}
+                        whileHover={showDropdown ? {} : {
+                            x: [0, 10, 0],
+                            width: ["100%", "120%", "100%"],
+                            transition: { 
+                                x: { 
+                                duration: 1, 
+                                repeat: Infinity, 
+                                repeatType: "loop",
+                                ease: "easeIn"
+                                },
+                                width: { 
+                                duration: 1, 
+                                repeat: Infinity, 
+                                repeatType: "loop",
+                                ease: "easeIn"
+                                }
+                            }
+                        }}
+                    >
                     <button style={{ ...styles.dropdownSwitch}} 
                     onClick={() => setShowDropdown(!showDropdown)} aria-label={t("languages.language")}>
                         <span
@@ -83,6 +105,7 @@ export default function LangMenu() {
                             {showDropdown ? t("languages.language") : ""}
                         </span>
                     </button>
+                    </motion.div>
                 </div>
             </div>
             <div style={{ ...styles.dropdownContainer, visibility: showDropdown ? 'visible' : 'hidden' }} className={showDropdown ? 'fadeInFromLeft' : 'fadeOutToLeft'}>
@@ -132,7 +155,7 @@ const styles = {
         width: '100%',
         height: 30,
         borderWidth: 0,
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
         // borderColor: '#F07633',
         alignItems: 'center',
         justifyContent: 'left',
@@ -140,9 +163,10 @@ const styles = {
         fontFamily: 'Helvetica, sans-serif',
         fontSize: 14,
         textAlign: 'left',
+        color: 'white',
     },
     seletedUnderline: {
-        backgroundColor: '#757575',
+        backgroundColor: '#C2C2C2',
         height: 2,
         transition: 'width 0.3s ease',
         marginRight: 5,

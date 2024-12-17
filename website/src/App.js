@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+
 import LangMenu from './components/LangMenu';
 
 import UnderConstruction from './pages/UnderConstruction';
@@ -30,7 +31,12 @@ export function RouterApp () {
               exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.5 }}>
               <ProjectsPage /></motion.div>} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
+              transition={{ duration: 0.5 }}>
+              <NotFound /></motion.div>} />
           </Routes>
         </AnimatePresence>
       </div>
@@ -51,7 +57,7 @@ const styles = {
     justifyContent: 'flex-start',
     paddingTop: '20px',
     paddingBottom: '10px',
-    // backgroundColor: 'red',
+    backgroundColor: '#4A4A4A',
   },
   langButtonContainer: {
       position: 'absolute',

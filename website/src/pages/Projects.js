@@ -26,6 +26,7 @@ export default function ProjectsPage() {
             <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
                 <PageButton text={t('construction.home')} link="/" />
             </div>
+            <div style={{ height: '100vh' }} />
         </div>
     );
 }
@@ -40,11 +41,11 @@ const styles = {
         padding: '80px',
     },
     h1: {
-        color: '#333',
+        color: 'white',
         fontSize: '3rem',
     },
     p: {
-        color: '#666',
+        color: '#C2C2C2',
         fontSize: '1.5rem',
     },
 };
