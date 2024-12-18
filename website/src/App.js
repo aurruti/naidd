@@ -4,8 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import LangMenu from './components/LangMenu';
 
-import UnderConstruction from './pages/UnderConstruction';
+import Home from './pages/Home';
 import ProjectsPage from './pages/Projects';
+import UnderConstruction from './pages/UnderConstruction';
 
 import NotFound from './pages/error-pages/404';
 
@@ -24,7 +25,7 @@ export function RouterApp () {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.5 }}> 
-              <UnderConstruction /></motion.div>} />
+              <Home /></motion.div>} />
             <Route path="/projects" element={<motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}

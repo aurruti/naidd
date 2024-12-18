@@ -10,9 +10,13 @@
         "ca": "Catalan",
         "en": "English"
     },
+    "home": {
+        "title": "Aitor Urruticoechea",
+        "subtitle": "Page under construction"
+    },
     "projects": {
         "title": "Projects",
-        "subtitle": "Webpage under construction"
+        "subtitle": "Page under construction"
     },
     "404": {
         "title": "Oops! This doesn't look right...",

@@ -32,6 +32,17 @@ export const SvgLetterToMotionPath = ({
   }) => {
   const letterPath = SvgLetter(letter);
 
+  if ( letter === " " ) {
+    const width = (1+4*letterSpacing)*scale
+    console.log(`letter: ${letter}, width: ${letterSpacing}, height: 100`);
+    return (
+      <motion.svg
+        width={width}
+        height={100}
+        viewBox={`0 0 ${width} 100`}
+      />
+    );
+  }
   const { minX, maxX } = getPathExtents(letterPath);
   let width = (strokeWidth + maxX - minX) + letterSpacing;
   if (width <= 7+strokeWidth) { width = 7+strokeWidth; }
