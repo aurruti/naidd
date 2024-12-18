@@ -6,7 +6,7 @@ import LangMenu from './components/LangMenu';
 
 import Home from './pages/Home';
 import ProjectsPage from './pages/Projects';
-import UnderConstruction from './pages/UnderConstruction';
+// import UnderConstruction from './pages/UnderConstruction';
 
 import NotFound from './pages/error-pages/404';
 
