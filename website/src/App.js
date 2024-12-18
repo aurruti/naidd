@@ -55,12 +55,12 @@ const styles = {
   globalBackground: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingTop: '20px',
-    paddingBottom: '10px',
+    //paddingTop: '20px',
+    //paddingBottom: '10px',
     backgroundColor: '#4A4A4A',
   },
   langButtonContainer: {
       position: 'absolute',
-      paddingTop: '20px',
+      paddingTop: '50px',
   },
 }

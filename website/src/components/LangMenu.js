@@ -10,10 +10,14 @@ import { getLangColor, CurrentLangColor } from "../fun/langColor";
 function DropItem(langname, lng) {
     const { i18n } = useTranslation();
     const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-        localStorage.setItem('i18nextLng', lng);
+        document.body.style.transition = "background-color 0.5s ease";
+        document.body.style.backgroundColor = "black";
+        setTimeout(() => {
+            i18n.changeLanguage(lng);
+            localStorage.setItem('i18nextLng', lng);
+            window.location.reload();
+        }, 500);
     };
-    
     const langColor = getLangColor(lng);
     const [hover, setHover] = useState(false);
 
@@ -68,19 +72,21 @@ export default function LangMenu() {
                     <motion.div
                         animate={{ x: 0, width: '100%' }}
                         whileHover={showDropdown ? {} : {
-                            x: [0, 10, 0],
-                            width: ["100%", "120%", "100%"],
+                            x: [0, 10, 0, 10, 0],
+                            width: ["100%", "120%", "100%", "120%", "100%"],
                             transition: { 
                                 x: { 
-                                duration: 1, 
+                                duration: 0.9, 
                                 repeat: Infinity, 
                                 repeatType: "loop",
+                                repeatDelay: 1,
                                 ease: "easeIn"
                                 },
                                 width: { 
-                                duration: 1, 
+                                duration: 0.9, 
                                 repeat: Infinity, 
                                 repeatType: "loop",
+                                repeatDelay: 1,
                                 ease: "easeIn"
                                 }
                             }
