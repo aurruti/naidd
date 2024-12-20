@@ -61,7 +61,7 @@ const styles = {
     backgroundColor: '#4A4A4A',
   },
   langButtonContainer: {
-      position: 'absolute',
-      paddingTop: '50px',
+      position: 'fixed',
+      top: '50px',
   },
 }

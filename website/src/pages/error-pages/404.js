@@ -23,8 +23,8 @@ export default function NotFound() {
     return (
         <div style={styles.app} className="App">
             <h1 style={styles.h1}>{t('404.title')}</h1>
+            <div style={{ height: '20px' }}></div>
             <p style={styles.p}>{t('404.subtitle')}</p>
-            <div style={{ height: '60px' }} />
             <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
                 <PageButton text={t('construction.home')} link="/" />
                 <PageButton text={t('construction.projects')} link="/projects" />
@@ -42,13 +42,15 @@ const styles = {
         textAlign: 'center',
         alignItems: 'center',
         padding: '80px',
+        height: '100vh',
     },
     h1: {
-        color: '#333',
+        color: 'white',
         fontSize: '3rem',
+        fontFamily: 'Helvetica, sans-serif',
     },
     p: {
-        color: '#666',
+        color: '#C2C2C2',
         fontSize: '1.5rem',
     },
 };

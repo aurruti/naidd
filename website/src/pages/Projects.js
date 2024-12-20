@@ -1,16 +1,35 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-// import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import PageButton from '../components/PageButton';
 import DrawText from '../components/DrawText';
+import ProjectCardGrid from '../components/ProjectCardGrid';
 
-// import SvgLetterToMotionPath from '../fun/SvgLetterToMotionPath';
+import PlaceholderHorizontal1 from '../assets/placeholder_horizontal_1.jpg';
+import PlaceholderHorizontal2 from '../assets/placeholder_horizontal_2.jpg';
 
 export default function ProjectsPage() {
     const { i18n } = useTranslation();
     const t = i18n.t;
-    
+
+    const cards = [
+        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
+        { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' },
+        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
+        { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' },
+        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
+        { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' },
+        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
+        { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' },
+        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
+        { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' }
+    ];
 
     useEffect(() => {
         const savedLanguage = localStorage.getItem('i18nextLng');
@@ -25,36 +44,54 @@ export default function ProjectsPage() {
 
     return (
         <div style={styles.app} className="App">
-            <DrawText text={t('projects.title').toUpperCase()}
-                strokeWidth = {7}
-                scale = {1.5}
-                letterSpacing={30}
-                yOffset={-100}
-            />
-            <p style={styles.p}>{t('projects.subtitle')}</p>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <PageButton text={t('construction.home')} link="/" /> 
+            <motion.div style={{ overflow: 'hidden', width: '100%' }}>
+                <ProjectCardGrid cards={cards} />
+            </motion.div>
+            <div style={{ position: 'fixed', bottom: "15%", width: '100%' }}>
+                <div style={styles.centerstripe}>
+                <div style={styles.centeringContainer}>
+                    <div style={styles.scaleContainer}>
+                        <DrawText text={t('projects.title').toUpperCase()}
+                            strokeWidth = {10}
+                            scale = {1.5}
+                            letterSpacing={30}
+                            xOffset={-10}
+                            yOffset={-100}
+                        />
+                    </div>
+                </div>
+                </div>
+                <div style={{height:'2rem', justifyContent:"center", display: 'flex', flexDirection: 'row' }}>
+                        <PageButton text={t('construction.home')} link="/" type='backSmall' /> 
+                </div>
             </div>
+            
         </div>
     );
 }
 
 const styles = {
     centerstripe: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
         width: '100%',
-        height: '5rem',
-        textAlign: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-        opacity: 0.8,
+        maxWidth: '100vw',
+        overflow: 'hidden',
+        backgroundColor: '#1C1C1C',
+        opacity: 0.9,
         zIndex: 10,
+        textAlign: 'center',
+        paddingTop: '1%',
+        paddingBottom: '1%',
+    },
+    scaleContainer: {
+        width: 'clamp(300px, calc(100vw - 2rem), 1200px)',
+        fontSize: 'clamp(1rem, calc(0.8rem + 1vw), 2rem)',
+        margin: '0 auto',
+        transform: 'scale(calc(min(1, 100vw / 1200px)))'
     },
     app: {
         display: 'flex',
         minHeight: '100vh',
+        minWidth: '100vw',
         flexDirection: 'column',
         justifyContent: 'center',
         textAlign: 'center',
@@ -62,16 +99,6 @@ const styles = {
         paddingTop: '0px',
         paddingBottom: '80px',
         zIndex: 0,
-    },
-    centertitle: {
-        color: 'black',
-        fontFamily: 'Helvetica, sans-serif',
-        fontSize: '3rem',
-        textTransform: 'uppercase',
-    },
-    p: {
-        color: '#C2C2C2',
-        fontSize: '1.5rem',
     },
 };
 

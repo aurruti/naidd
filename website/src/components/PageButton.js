@@ -1,8 +1,49 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function PageButton({ text, link, onClick = () => {}, type="normal" }) {
+import TypeText from './TypeText';
+
+export default function PageButton({ text, link, onClick = () => {}, type="normal", 
+    buttonStyle = {}
+}) {
     const [hover, setHover] = useState(false);
+    const styling = { ...styles.button, ...buttonStyle };
+
+    if (type === 'backSmall') {
+        return (
+            <Link
+                style={{ ...styling, textDecoration: 'none', 
+                    backgroundColor: hover ? '#1F1F1F' : '#fff',
+                    color: hover? '#fff' : '#1F1F1F',
+                    border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',
+                    
+                }}
+                onClick={onClick}
+                to={link}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+            >{text}</Link>
+        )
+    }
+
+    if (type === 'typeText') {
+        return (
+            <Link
+                style={{ ...styles.button, textDecoration: 'none', 
+                    backgroundColor: hover ? '#1F1F1F' : '#fff',
+                    color: hover? '#fff' : '#1F1F1F',
+                    border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',
+                    
+                }}
+                onClick={onClick}
+                to={link}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+            >
+                <TypeText text={text} />
+            </Link>
+        );
+    }
 
     if (type === 'inverse') {
         return (
@@ -23,7 +64,7 @@ export default function PageButton({ text, link, onClick = () => {}, type="norma
 
     return (
         <Link
-            style={{ ...styles.button, textDecoration: 'none', 
+            style={{ ...styling, textDecoration: 'none', 
                 backgroundColor: hover ? '#1F1F1F' : '#fff',
                 color: hover? '#fff' : '#1F1F1F',
                 border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',
