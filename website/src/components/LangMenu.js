@@ -30,8 +30,8 @@ function DropItem(langname, lng) {
             onMouseLeave={() => setHover(false)}
         >
             {langname}
-            <div style={styles.seletedUnderline}>
-            <div style={{ ...styles.seletedUnderline, backgroundColor: langColor, 
+            <div style={styles.selectedUnderline}>
+            <div style={{ ...styles.selectedUnderline, backgroundColor: langColor, 
                 width: i18n.language === lng || hover ? '100%' : 0 }}/>
             
             </div>
@@ -171,7 +171,7 @@ const styles = {
         textAlign: 'left',
         color: 'white',
     },
-    seletedUnderline: {
+    selectedUnderline: {
         backgroundColor: '#C2C2C2',
         height: 2,
         transition: 'width 0.3s ease',

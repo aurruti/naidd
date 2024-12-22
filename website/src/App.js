@@ -63,5 +63,6 @@ const styles = {
   langButtonContainer: {
       position: 'fixed',
       top: '50px',
+      zIndex: 100,
   },
 }

@@ -29,7 +29,8 @@ export default function PageButton({ text, link, onClick = () => {}, type="norma
     if (type === 'typeText') {
         return (
             <Link
-                style={{ ...styles.button, textDecoration: 'none', 
+                style={{ ...styles.button, display: 'flex', 
+                    justifyContent:"center", textDecoration: 'none', 
                     backgroundColor: hover ? '#1F1F1F' : '#fff',
                     color: hover? '#fff' : '#1F1F1F',
                     border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',

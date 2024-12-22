@@ -40,8 +40,8 @@ const TypeLetter = ({ letter, letterTime, letterDelay }) => {
 
 export default function TypeText({ 
   text,
-  letterTime = 50,
-  letterDelay = 0.25,
+  letterTime = 25,
+  letterDelay = 1,
   font="sans-serif",
  }) {
   let delayList = [];

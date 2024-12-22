@@ -14,7 +14,7 @@ export default function ProjectsPage() {
     const t = i18n.t;
 
     const cards = [
-        { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
+        { title: 'Naidd Webserver', image: PlaceholderHorizontal1, link: '/', description: 'A domestic server project.'},
         { title: 'Test 2', image: PlaceholderHorizontal2, link: '/page2' },
         { title: 'Test 3', image: PlaceholderHorizontal1, link: '/page3' },
         { title: 'Test 1', image: PlaceholderHorizontal1, link: '/page1' },
@@ -44,11 +44,13 @@ export default function ProjectsPage() {
 
     return (
         <div style={styles.app} className="App">
-            <motion.div style={{ overflow: 'hidden', width: '100%' }}>
+            <motion.div style={{ overflow: 'hidden', width: '100%', height: '100%', zIndex: 10 }}>
                 <ProjectCardGrid cards={cards} />
             </motion.div>
-            <div style={{ position: 'fixed', bottom: "15%", width: '100%' }}>
-                <div style={styles.centerstripe}>
+            <div style={{ position: 'fixed', bottom: "15%", width: '100%', zIndex: 50 }}>
+                <motion.div style={styles.centerstripe}
+                    whileHover={{opacity: 0.2}}
+                >
                 <div style={styles.centeringContainer}>
                     <div style={styles.scaleContainer}>
                         <DrawText text={t('projects.title').toUpperCase()}
@@ -60,9 +62,9 @@ export default function ProjectsPage() {
                         />
                     </div>
                 </div>
-                </div>
-                <div style={{height:'2rem', justifyContent:"center", display: 'flex', flexDirection: 'row' }}>
-                        <PageButton text={t('construction.home')} link="/" type='backSmall' /> 
+                </motion.div>
+                <div style={{justifyContent:"center", display: 'flex', flexDirection: 'row' }}>
+                    <PageButton text={t('construction.home')} link="/" type='backSmall' /> 
                 </div>
             </div>
             
@@ -77,7 +79,7 @@ const styles = {
         overflow: 'hidden',
         backgroundColor: '#1C1C1C',
         opacity: 0.9,
-        zIndex: 10,
+        zIndex: 50,
         textAlign: 'center',
         paddingTop: '1%',
         paddingBottom: '1%',
@@ -97,8 +99,7 @@ const styles = {
         textAlign: 'center',
         alignItems: 'center',
         paddingTop: '0px',
-        paddingBottom: '80px',
-        zIndex: 0,
+        // paddingBottom: '80px',
     },
 };
 
