@@ -13,10 +13,16 @@ export default function PageButton({ text, link, onClick = () => {}, type="norma
         return (
             <Link
                 style={{ ...styling, textDecoration: 'none', 
-                    backgroundColor: hover ? '#1F1F1F' : '#fff',
-                    color: hover? '#fff' : '#1F1F1F',
-                    border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',
-                    
+                    backgroundColor: "transparent",
+                    opacity: hover ? '1' : '0.8',
+                    width: 'max-content',
+                    height: 'max-content',
+                    padding: '8px',
+                    margin: '0px',
+                    color: '#fff',
+                    fontWeight: hover ? "bold" : "normal",
+                    border: "transparent"
+                    // border: hover ? '1px solid  #1F1F1F' : '1px solid #ccc',
                 }}
                 onClick={onClick}
                 to={link}

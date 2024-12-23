@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import placeholderImage from '../assets/placeholder_horizontal_1.jpg';
+import { useTranslation } from 'react-i18next';
 
-export const ProjectCard = ({ title, image = placeholderImage, link, description="lorem ipsum"}) => {
+import placeholderImage from '../assets/placeholder_horizontal_1.jpg';
+import { MdArrowCircleRight } from 'react-icons/md';
+
+const FutureProjectCard = () => {
+  const t = useTranslation().t;
+  return (
+    <div style={{ ...styles.card, cursor: 'default' }}>
+      <h3 style={{ ...styles.cardTitle, fontSize: '1rem', fontWeight:"lighter", color: 'rgba(31, 31, 31, 0.9)' }}>
+        {t("projects.future")}
+      </h3>
+    </div>
+  );
+}
+
+export const ProjectCard = ({ title, image = placeholderImage, link, description="lorem ipsum", color="rgba(31, 31, 31,"}) => {
+  const t = useTranslation().t;
   const [isHovered, setIsHovered] = useState(false);
+  const [delayDesc, setDelayDesc] = useState(false);
+  function startDelayDesc(delay, True = true) {
+    setTimeout(() => {
+      setDelayDesc(True);
+    }, delay * 1000);
+  }
 
   return( 
     <motion.div
@@ -12,20 +33,41 @@ export const ProjectCard = ({ title, image = placeholderImage, link, description
       className="card"
       style={{
         ...styles.card,
-        backgroundImage: `url(${image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         position: 'relative',
       }}
       onClick={() => window.location.href = link}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+      onHoverStart={() => { setIsHovered(true); startDelayDesc(0.3, true) }}
+      onHoverEnd={() => { setIsHovered(false); startDelayDesc(0.1, false) }}
+      aria-label={title}
+      aria-description={description}
     >
+      <motion.div style={{
+        position: 'absolute',
+        backgroundImage: `url(${image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1,
+      }} 
+        initial={{
+          filter: 'blur(0px)',
+        }}
+        animate={{
+          filter: isHovered ? 'blur(2px)' : 'blur(0px)',
+        }}
+        transition={{
+          filter: { duration: 0.3, delay: isHovered ? 0 : 0.3 },
+          transition: 'ease'
+        }}
+      />
       <motion.div style={{
         position: 'absolute',
         width: '0.75rem',
         right: '10%',
-        backgroundColor: 'rgba(31, 31, 31, 1)',
+        backgroundColor: `${color} 1)`,
         }}
         initial = {{
           height: '3rem',
@@ -44,29 +86,29 @@ export const ProjectCard = ({ title, image = placeholderImage, link, description
       </motion.div>
       <motion.div style={{
           position: 'absolute',
-          paddingRight: '1rem',
-          paddingLeft: '1rem',
+          paddingRight: '1.25rem',
+          paddingLeft: '0.75rem',
           right: '10%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-end'
         }}
-        initial = {{
+        initial={{
           top: '1rem',
           paddingTop: 0,
-          backgroundColor: 'rgba(31, 31, 31, 0.1)',
+          backgroundColor: `${color} 0.1)`,
           height: '3rem',
           width: 'max-content',
         }}
-        animate = {{
+        animate={{
           top: isHovered ? 0 : '1rem',
           paddingTop: isHovered ? '1rem' : 0,
-          backgroundColor: isHovered ? 'rgba(31, 31, 31, 0.5)' : 'rgba(31, 31, 31, 0.1)',
+          backgroundColor: isHovered ? `${color} 0.5)` : `${color} 0.1)`,
           height: isHovered ? '100%' : '3rem',
           width: isHovered ? '90%' : 'max-content',
         }}
-        transition = {{
-          width: { duration: 0.3, delay: isHovered ? 0.3 : 0 },
+        transition={{
+          width: { duration: isHovered ? 0.3 : 0.2, delay: isHovered ? 0.3 : 0.1 },
           backgroundColor: { duration: 0.3, delay: isHovered ? 0.3 : 0 },
           height: { duration: 0.3, delay: isHovered ? 0 : 0.3 },
           top: { duration: 0.3, delay: isHovered ? 0 : 0.3 },
@@ -74,20 +116,32 @@ export const ProjectCard = ({ title, image = placeholderImage, link, description
           transition: 'ease'
         }}
       >
-        <motion.h3 style={styles.cardTitle}
-        >{title}</motion.h3>
-        <motion.p style={styles.cardDescription}
-          animate = {{
-            opacity: isHovered ? 1 : 0,
-          }}
-          transition = {{
-            transition: 'opacity 0.3s ease',
-            delay: isHovered ? 0.5 : 0
-          }}
-        >{description}</motion.p>
+        <motion.h3 style={styles.cardTitle}>{title}</motion.h3>
+        <AnimatePresence>
+          { isHovered && delayDesc && (
+            <motion.div
+              key={"cardDescription"}
+              style={styles.cardDescription}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+               opacity: { duration: isHovered ? 0.3 : 0.1, delay: isHovered ? 0.3 : 0 },
+               transition: 'ease'
+              }}
+            >
+              <motion.p>{description}</motion.p>
+              <motion.div style={{marginTop:"2rem", display:"flex", flexDirection:"row", justifyContent:"right"}}>
+                <motion.p style={{fontStyle:"italic"}}>{t("projects.more")}</motion.p>
+                <MdArrowCircleRight style={{margin:"0.3rem"}}/>
+              </motion.div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     </motion.div>
-)};
+  );};
 
 const ProjectCardGrid = ({ cards }) => {
   const [columns, setColumns] = useState(getColumns());
@@ -107,6 +161,11 @@ const ProjectCardGrid = ({ cards }) => {
     return 3;
   }
 
+  // add len(cards) % 2*columns empty cards
+  const cardsCopy = [...cards];
+  const emptyCards = new Array((2 * columns - ((cards.length+2) % (2 * columns))) % (2 * columns)).fill(null);
+  const newCards = [...cardsCopy, ...emptyCards];
+
   return (
     <motion.div
       initial="hidden"
@@ -122,19 +181,24 @@ const ProjectCardGrid = ({ cards }) => {
       }}
     >
       <ProjectCardGridContainer columns={columns}>
-        {cards.map((card, index) => (
+        {newCards.map((card, index) => (
           <motion.div key={index} variants={{
-            hidden: { opacity: 0.1},
+            hidden: { opacity: 0.1 },
             visible: { opacity: 1 },
           }}
             transition={{ duration: 1 }}
           >
-            <ProjectCard
-              title={card.title}
-              description={card.description}
-              image={card.image}
-              link={card.link}
-            />
+            {card ? (
+              <ProjectCard
+                title={card.title}
+                description={card.description}
+                image={card.image}
+                link={card.link}
+                color={card.color}
+              />
+            ) : (
+              <FutureProjectCard />
+            )}
           </motion.div>
         ))}
       </ProjectCardGridContainer>
@@ -153,7 +217,7 @@ const styles = {
     justifyContent: 'center',
     overflow: 'hidden',
     color: 'white',
-    backgroundColor: '#000',
+    backgroundColor: 'transparent',
     boxShadow: '0 4px 8px rgba(31, 31, 31, 0.1)',
   },
   cardTitle: {

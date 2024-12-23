@@ -16,7 +16,36 @@
     },
     "projects": {
         "title": "Projectes",
-        "subtitle": "Pàgina en construcció"
+        "more": "Més informació",
+        "future": "Properament, més projectes...",
+        "aalto-ccis":{
+            "title": "Base de Codi Aalto CCIS",
+            "intro": "Compedi de codi dissenyat i implementat per a diferents instàncies de cursos i assignatures del Màster en Ciències de la Computació, Comunicació, i l'Informació de la Universitat d'Aalto (Finlàndia)."
+        },
+        "despesapp": {
+            "title": "DespesApp",
+            "intro": "DespesApp és una aplicació mòbil per gestionar despeses personals; amb les opcions per automàticament actualitzar les despeses segons el seu tipus en el teu full de càlcul o Google Sheets preferit."
+        },
+        "missing-sensor": {
+            "title": "Sensors portables",
+            "intro": "Projecte per la construcció d'un set de dades de múltiples sensors portables en contacte directe amb la pell de l'usuari per diferents posicions corporals i moviments habituals. Desenvolupat conjuntament amb Saeideh Mansouri i Anh Pham com a part de l'assignatura d'Intel·ligència Ambiental del Màster en Ciències de la Computació, Comunicació, i l'Informació de la Universitat d'Aalto (Finlàndia)."
+        },
+        "naidd": {
+            "title": "Nåidd",
+            "intro": "Nåidd és un projecte pel desenvolupament d'un servidor web domèstic per a múltiples projectes personals, incloent-hi aquesta pàgina web. Amb proteccions parcials per futura escalabilitat i seguretat, Nåidd té com a objectiu mantenir una estructura flexible i lleugera, permetent així el seu funcionament pràcticament allà on calgui."
+        },
+        "warming-game": {
+            "title": "Heatwave VR",
+            "intro": "Un joc seriós de realitat virutal i tecnologia hàptica sobre la Crisi Climàtica. Desenvolupat conjuntament amb Saeideh Mansouri i Anh Pham com a part del Project Especial pel Màster en Ciències de la Computació, Comunicació, i l'Informació de la Universitat d'Aalto (Finlàndia)."
+        },
+        "TFG": {
+            "title": "CR3BP: Cap a L4 i L5",
+            "intro": "Treball de Fi de Grau (TFG) d'anàlisi de trajectòries en el Problema Restringit dels Tres Cossos (CR3BP) del sistema Terra-Sol amb l'objectiu de trobar rutes més eficients cap a òrbites periòdiques al voltant dels punts de Lagrange L4 i L5. Desenvolupat com a part del Grau en Enginyeria en Tecnologies Aeroespacials de la Universitat Politècnica de Catalunya."
+        },
+        "TFM":{
+            "title": "\"Templates\" i Canto",
+            "intro": "En procés! Treball de Fi de Màster (TFM) amb Cadentia Technologies. Desenvolupat com a part del Màster en Ciències de la Computació, Comunicació, i l'Informació de la Universitat d'Aalto (Finlàndia)."
+        }
     },
     "404": {
         "title": "Ep! Alguna cosa no ha anat bé...",

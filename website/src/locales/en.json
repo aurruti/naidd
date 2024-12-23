@@ -16,7 +16,36 @@
     },
     "projects": {
         "title": "Projects",
-        "subtitle": "Page under construction"
+        "more": "More info",
+        "future": "Future project",
+        "aalto-ccis": {
+            "title": "Aalto CCIS Codebase",
+            "intro": "Compendium of all the code designed and implemented for different courses of the Master's in Computation, Communication, and Information Sciences at Aalto University (Finland)."
+        },
+        "despesapp": {
+            "title": "DespesApp",
+            "intro": "DespesApp is a mobile application for tracking daily expenses; with options to automatically update expenses according to their type in your preferred spreadsheet or Google Sheets."
+        },
+        "missing-sensor": {
+            "title": "Wearable Sensors",
+            "intro": "Project for the construction of a dataset of multiple wearable sensors in direct contact with the user's skin for different body positions and habitual movements. Developed together with Saeideh Mansouri and Anh Pham as part of the Ambient Intelligence course of the Master's in Computation, Communication, and Information Sciences at Aalto University (Finland)."
+        },
+        "naidd": {
+            "title": "Nåidd",
+            "intro": "Nåidd is a project for the development of a home web server for multiple personal projects, including this webpage. With partial protections for future scalability and security, Nåidd aims to maintain a flexible and lightweight structure, allowing it to run practically wherever needed."
+        },
+        "warming-game": {
+            "title": "Heatwave VR",
+            "intro": "A serious game with VR and haptic technologies about the Climate Crisis. Developed together with Saeideh Mansouri and Anh Pham as part of the Special Project for the Master's in Computation, Communication, and Information Sciences at Aalto University (Finland)."
+        },
+        "TFG": {
+            "title": "CR3BP: Towards L4 and L5",
+            "intro": "Bachelor's Thesis analyzing trajectories in the Circular-Restricted Three-Body Problem (CR3BP) of the Earth-Sun system with the aim of finding more efficient routes to periodic orbits around the Lagrange points L4 and L5. Developed as part of the Bachelor's Degree in Aerospace Engineering Technologies at the Polytechnic University of Catalonia."
+        },
+        "TFM": {
+            "title": "\"Templates\" & Canto",
+            "intro": "Work in Progress! Master's Thesis with Cadentia Technologies. Developed as part of the Master's in Computation, Communication, and Information Sciences at Aalto University (Finland)."
+        }
     },
     "404": {
         "title": "Oops! This doesn't look right...",
