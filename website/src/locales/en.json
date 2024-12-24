@@ -17,7 +17,7 @@
     "projects": {
         "title": "Projects",
         "more": "More info",
-        "future": "Future project",
+        "future": "More projects coming soon...",
         "aalto-ccis": {
             "title": "Aalto CCIS Codebase",
             "intro": "Compendium of all the code designed and implemented for different courses of the Master's in Computation, Communication, and Information Sciences at Aalto University (Finland)."

@@ -8,21 +8,21 @@ import DrawText from '../components/DrawText';
 import ProjectCardGrid from '../components/ProjectCardGrid';
 
 import AaltoCcis from '../assets/thumbprojects/aaltoccis.jpg';
+import Templatescanto from '../assets/thumbprojects/templatescanto.jpeg';
 import DespesApp from '../assets/thumbprojects/despesapp.png';
 import Heatwave from '../assets/thumbprojects/heatwave.jpg';
 import Missingsensor from '../assets/thumbprojects/missingsensor.png';
+import Naidd from '../assets/thumbprojects/naidd.png';
 import TFG from '../assets/thumbprojects/tfg1.png';
-import PlaceholderHorizontal1 from '../assets/placeholder_horizontal_1.jpg';
-import PlaceholderHorizontal2 from '../assets/placeholder_horizontal_2.jpg';
 
 export default function ProjectsPage() {
     const { i18n } = useTranslation();
     const t = i18n.t;
 
     const cards = [
-        { title: t("projects.TFM.title"), image: PlaceholderHorizontal1, link: 'projects/TFM', description: t("projects.TFM.intro") },
-        { title: t("projects.naidd.title"), image: PlaceholderHorizontal2, link: 'projects/naidd', description: t("projects.naidd.intro") },
-        { title: t("projects.warming-game.title"), image: Heatwave, link: 'projects/warming-game', description: t("projects.warming-game.intro"), color: "rgb(10, 138, 69," },
+        { title: t("projects.TFM.title"), image: Templatescanto, link: 'projects/TFM', description: t("projects.TFM.intro")},
+        { title: t("projects.naidd.title"), image: Naidd, link: 'projects/naidd', description: t("projects.naidd.intro"), color: "rgb(30, 68, 139," },
+        { title: t("projects.warming-game.title"), image: Heatwave, link: 'projects/warming-game', description: t("projects.warming-game.intro"), color: "rgb(112, 12, 27," },
         { title: t("projects.despesapp.title"), image: DespesApp, link: 'projects/despesapp', description: t("projects.despesapp.intro"), color: "rgb(208, 58, 100," },
         { title: t("projects.missing-sensor.title"), image: Missingsensor, link: 'projects/missing-sensor', description: t("projects.missing-sensor.intro")},
         { title: t("projects.aalto-ccis.title"), image: AaltoCcis, link: 'projects/aalto-ccis', description: t("projects.aalto-ccis.intro"), color: "rgb(92, 13, 178,"  },
@@ -51,6 +51,8 @@ export default function ProjectsPage() {
                     <DrawText text={t('projects.title').toUpperCase()}
                         strokeWidth = {10}
                         scale = {1.5}
+                        //letterAnimationDuration={5}
+                        letterDelay={0.75}
                         letterSpacing={30}
                         xOffset={-10}
                         yOffset={-100}

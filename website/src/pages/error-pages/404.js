@@ -22,13 +22,15 @@ export default function NotFound() {
   
     return (
         <div style={styles.app} className="App">
+            <div style={{ height: '20%' }}></div>
             <h1 style={styles.h1}>{t('404.title')}</h1>
             <div style={{ height: '20px' }}></div>
             <p style={styles.p}>{t('404.subtitle')}</p>
             <div style={{ ...styles.app, display: 'flex', flexDirection: 'row' }}>
                 <PageButton text={t('construction.home')} link="/" />
-                <PageButton text={t('construction.projects')} link="/projects" />
+                <PageButton text={t('construction.projects')} type="inverse" link="/projects" />
             </div>
+            <div style={{ height: '40%' }}></div>
         </div>
     );
 }

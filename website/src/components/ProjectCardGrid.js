@@ -161,9 +161,10 @@ const ProjectCardGrid = ({ cards }) => {
     return 3;
   }
 
-  // add len(cards) % 2*columns empty cards
+  // add extra empty cards to complete the grid
   const cardsCopy = [...cards];
   const emptyCards = new Array((2 * columns - ((cards.length+2) % (2 * columns))) % (2 * columns)).fill(null);
+  if (columns === 1) emptyCards.push(null); // ensure +2 extra cards for the one column layout
   const newCards = [...cardsCopy, ...emptyCards];
 
   return (
