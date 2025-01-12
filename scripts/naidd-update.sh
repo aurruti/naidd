@@ -27,7 +27,16 @@ git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FIL
 # Are changes significant?
 if git diff --quiet HEAD origin/main -- '*.Dockerfile' '*/package.json' 'docker-compose.yml'; then
     git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
-    echo "No significant changes, skipping rebuild." >> "$LOG_FILE"
+    if ! docker-compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
+        echo "No significant changes; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
+        docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+        docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+        docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
+        docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
+    else
+        echo "No significant changes, skipping rebuild." >> "$LOG_FILE"
+    fi
+
     exit 0
 fi
 
