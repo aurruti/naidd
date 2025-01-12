@@ -17,7 +17,7 @@ if [ -z "$GIT_DIR" ] || [ -z "$GIT_WORK_TREE" ]; then
     exit 1
 fi
 
-## NOTE: the current script is NOT efficient: it is pulling constantly.
+## NOTE: the current script is NOT efficient: it is fetching constantly.
 ## It is better to use a webhook to trigger the update. But that is a problem for future me.
 ## A temp solution is this one; which the diff is checked before actually merging and restarting containers.
 
@@ -25,23 +25,22 @@ fi
 git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FILE"; exit 1; }
 
 # Are changes significant?
-if git diff --quiet HEAD origin/main -- '*.Dockerfile' '*/package.json' 'docker-compose.yml'; then
-    git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
+if git diff --quiet HEAD origin/main; then
     if ! docker-compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
-        echo "No significant changes; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
+        echo "No changes to pull; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
         docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
         docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
         docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
         docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
     else
-        echo "No significant changes, skipping rebuild." >> "$LOG_FILE"
+        echo "No changes to pull, skipping rebuild." >> "$LOG_FILE"
     fi
 
     exit 0
 fi
 
 git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
-echo "Changes detected, starting deployment process." >> "$LOG_FILE"
+echo "Changes detected, starting redeployment process." >> "$LOG_FILE"
 
 # TO-DO Backup current container list for potential rollback
 # docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
