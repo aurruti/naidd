@@ -18,6 +18,19 @@ This build requires python 3.10 and docker version 27.2.
 2. **Manage secrets**
 
     Add .env file in the root directory.
+    Add appropate https certificates in docker/duckdnscerts/ 
+
+
+3. **Build the setup**
+
+    On Linux/WSL use:
+
+        ./scripts/naidd-update.sh
+
+4. **Set-up periodic updates** (optional)
+
+    Set up a chrontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date always.
+
 
 
 ## Acknowledgements
