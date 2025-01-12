@@ -7,7 +7,7 @@ fi
 
 domains=(aurruti.cat www.aurruti.cat)
 email=${EMAIL}
-staging=0 # Set to 1 for test certificate, 0 for production
+staging=1 # Set to 1 for test certificate, 0 for production
 
 # Create the necessary directory structure
 mkdir -p certbot/conf/live/aurruti.cat

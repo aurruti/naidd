@@ -2,6 +2,10 @@ venv/
 .env
 
 # Ignore certbot keys and certificates
+docker/*
+!docker/duckdnscerts/
+docker/duckdnscerts/*
+!docker/duckdnscerts/dummy.txt
 certbot/
 
 # Others
