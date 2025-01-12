@@ -8,7 +8,8 @@ services:
       - "8080:80"
       - "443:443"
     volumes:
-      - ./docker/duckdnscerts:/etc/ssl/certs
+      - ./docker/duckdns:/etc/ssl/certs
+      - ./docker/duckdns:/etc/ssl/private
       - ./nginx/conf.d:/etc/nginx/conf.d
       # - ./certbot/conf:/etc/letsencrypt
       # - ./certbot/www:/var/www/certbot

@@ -18,7 +18,7 @@ This build requires python 3.10 and docker version 27.2.
 2. **Manage secrets**
 
     Add .env file in the root directory.
-    Add appropate https certificates in docker/duckdnscerts/ 
+    Add appropate https certificates in docker/duckdns/ 
 
 
 3. **Build the setup**
