@@ -19,7 +19,7 @@ fi
 
 ## NOTE: the current script is NOT efficient: it is pulling constantly.
 ## It is better to use a webhook to trigger the update. But that is a problem for future me.
-## A temp solution is this one, or even one where the diff is checked before actually merging.
+## A temp solution is this one; which the diff is checked before actually merging and restarting containers.
 
 # Fetch from repo (no access token needed)
 git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FILE"; exit 1; }
