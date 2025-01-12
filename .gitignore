@@ -1,6 +1,10 @@
 venv/
-
-scripts/logs/*
-!scripts/logs/dummy.txt
-
 .env
+
+# Ignore certbot keys and certificates
+certbot/
+
+# Others
+.docker/
+.DS_Store
+*.log

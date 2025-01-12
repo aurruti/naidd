@@ -28,6 +28,17 @@ jobs:
       run: |
         docker-compose build
 
+    - name: Create Required Directories
+      run: |
+        mkdir -p certbot/conf
+        mkdir -p certbot/www
+        # Create temporary self-signed cert for testing
+        mkdir -p certbot/conf/live/aurruti.cat
+        openssl req -x509 -nodes -newkey rsa:4096 -days 1 \
+          -keyout certbot/conf/live/aurruti.cat/privkey.pem \
+          -out certbot/conf/live/aurruti.cat/fullchain.pem \
+          -subj '/CN=localhost'
+
     - name: Run Docker Compose
       run: |
         docker-compose up -d

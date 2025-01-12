@@ -41,7 +41,6 @@ if git diff --quiet HEAD origin/main -- '*.Dockerfile' '*/package.json' 'docker-
 fi
 
 git pull origin main || { echo "Failed to pull from origin main." >> "$LOG_FILE"; exit 1; }
-
 echo "Changes detected, starting deployment process." >> "$LOG_FILE"
 
 # TO-DO Backup current container list for potential rollback
