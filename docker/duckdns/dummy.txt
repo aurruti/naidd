@@ -1,6 +1,0 @@
-dummy file
-
-this folder is supposed to contain a copy or a link to 
-fullchain.pem
-privkey.pem
-for https certification !
