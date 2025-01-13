@@ -19,7 +19,15 @@ This build requires python 3.10 and docker version 27.2.
 
     Add .env file in the root directory.
 
-    Create the proper HTTPS certs keys in /etc/letsencrypt/live .
+    Create the proper SSL certificates to start deploying: on Linux/WSL, use:
+    
+        docker run -it --rm \
+            -v "$PWD/certbot/conf:/etc/letsencrypt" \
+            -v "$PWD/certbot/www:/var/www/certbot" \
+            -p 80:80 \
+            certbot/certbot certonly --standalone \
+            --email your@email.com --agree-tos --no-eff-email \
+            -d domain.io
 
 
 3. **Build the setup**
