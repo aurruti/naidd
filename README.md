@@ -1,6 +1,8 @@
 # Nåidd
 Nåidd is a domestic server project. Currently a work in progress, it is envisioned as base for a home-based server running limitted functions from web-hosting to personal projects. The ultimate goal is to be able to run such a simple deployment in any old hardware that one might have at home, as long as it can run Linux and have basic capabilities.
 
+For routing, the basic philosophy of Nåidd is to route everything through a duckdns domain; which can then be masked by whatever domains are to be actually used afterwards. This allows for full flexibility regarding domain usage, migrations, and etc; while keeping also an static dns configuration available for the functionalities that may need that.
+
 
 ## Seting up the repo
 This build requires python 3.10 and docker version 27.2.
@@ -20,14 +22,14 @@ This build requires python 3.10 and docker version 27.2.
     Add .env file in the root directory.
 
     Create the proper SSL certificates to start deploying: on Linux/WSL, use:
-    
+
         docker run -it --rm \
             -v "$PWD/certbot/conf:/etc/letsencrypt" \
             -v "$PWD/certbot/www:/var/www/certbot" \
             -p 80:80 \
             certbot/certbot certonly --standalone \
             --email your@email.com --agree-tos --no-eff-email \
-            -d domain.io
+            -d domain.duckdns.org
 
 
 3. **Build the setup**

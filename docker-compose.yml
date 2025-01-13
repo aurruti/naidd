@@ -16,6 +16,21 @@ services:
     depends_on:
       - website
     restart: unless-stopped
+    # Reload nginx every 6 hours to pick up any certificate changes
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+  # Certbot container
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - web
+    depends_on:
+      - nginx-proxy
+    # Try to renew every 30 days
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 30d & wait $${!}; done;'"
 
   # Website container
   website:
