@@ -30,7 +30,7 @@ This build requires python 3.10 and docker version 27.2.
 
 4. **Set-up periodic updates** (optional)
 
-    Set up a chrontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date.
+    Set up a crontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date.
 
 
 
