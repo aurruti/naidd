@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# File structure: naidd-update is in root-repo/scripts/
+# File structure: despesapp-update is in root-repo/scripts/
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-LOG_FILE="${SCRIPT_DIR}/logs/naidd-update.log"
+LOG_FILE="${SCRIPT_DIR}/logs/despesapp-update.log"
 DOCKER_COMPOSE_FILE="${REPO_ROOT}/docker-compose.yml"
-echo "$(date) Running naidd-update.sh." >> "$LOG_FILE"
+echo "$(date) Running despesapp-update.sh." >> "$LOG_FILE"
 
-# Correctly set Git environment
-export GIT_DIR="${REPO_ROOT}/.git"
-export GIT_WORK_TREE="${REPO_ROOT}"
+# Correctly set Git environment -> this is a subrepo, meaning the .git directory is actually in root-repo/despesapp/
+export GIT_DIR="${REPO_ROOT}/despesapp/.git"
+export GIT_WORK_TREE="${REPO_ROOT}/despesapp"
 
 # .git directory is given by enviornment variable
 if [ -z "$GIT_DIR" ] || [ -z "$GIT_WORK_TREE" ]; then
@@ -47,16 +47,16 @@ echo "Changes detected, starting redeployment process." >> "$LOG_FILE"
 # docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
 
 # Pull and build
-docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" pull despesapp || { echo "Failed to pull despesapp image." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" build despesapp --no-cache || { echo "Failed to build despesapp container." >> "$LOG_FILE"; exit 1; }
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" stop despesapp || { echo "Failed to stop despesapp container." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" rm -f despesapp || { echo "Failed to remove despesapp container." >> "$LOG_FILE"; exit 1; }
 
 echo "Starting new containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" up -d despesapp || { echo "Failed to deploy new despesapp container." >> "$LOG_FILE"; exit 1; }
 
 # TO-DO Health check
 # sleep 10  # Give containers time to start
@@ -64,5 +64,5 @@ docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to deploy new c
 # docker-compose ps | grep -q '(healthy)' || { echo "Containers not healthy" >> "$LOG_FILE"; exit 1; }
 
 # Cleanup
-docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE" 
+docker image prune -f --filter "label=despesapp" || echo "Failed to cleanup images." >> "$LOG_FILE"
 echo "Deployment successful." >> "$LOG_FILE"

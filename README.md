@@ -32,14 +32,25 @@ This build requires python 3.10 and docker version 27.2.
             --email your@email.com --agree-tos --no-eff-email \
             -d domain.duckdns.org
 
+3. **Set up dependant repositories** (or remove references to them)
 
-3. **Build the setup**
+    This applies to a set of repositories and apps that are designed to run within the Nåidd setup. In this repo, only "website" is included, so the others must be manually included and managed. This is a sub-optimal solution and there are more elegant ways to do this; but for the sake of keeping things small this is the approach for now.
+
+
+    Concretely, this step applies to the following repository: depesapp (see https://github.com/aurruti/despesapp ) .
+
+    For each of the subrepositories just clone it in a folder named as the repository.
+
+    Alternatively, if they are not to be used, remove the references to those repositories from: nginx/conf.d/default.conf, docker-compose.yml, and optionally the corresponding update script in the scripts folder.  
+
+
+4. **Build the setup**
 
     On Linux/WSL use:
 
         ./scripts/naidd-update.sh
 
-4. **Set-up periodic updates** (optional)
+5. **Set-up periodic updates** (optional)
 
     Set up a crontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date. Do so as well for any other scripts to keep other repo-related stuff updated.
 

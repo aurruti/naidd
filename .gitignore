@@ -1,6 +1,9 @@
 venv/
 .env
 
+# Sub-repositories
+despesapp/
+
 # Ignore certbot keys and certificates
 certbot/
 
