@@ -28,7 +28,11 @@ jobs:
       run: |
         docker-compose build
 
-    - name: Create Required Directories
+    - name: Clone the required repositories
+      run: |
+        git clone https://github.com/aurruti/despesapp
+
+    - name: Create Required Directories and Certificates
       run: |
         mkdir -p certbot/conf
         mkdir -p certbot/www
