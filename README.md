@@ -4,8 +4,9 @@ Nåidd is a domestic server project. Currently a work in progress, it is envisio
 For routing, the basic philosophy of Nåidd is to route everything through a duckdns domain; which can then be masked by whatever domains are to be actually used afterwards. This allows for full flexibility regarding domain usage, migrations, and etc; while keeping also an static dns configuration available for the functionalities that may need that.
 
 
-## Seting up the repo
+## Setting up the repo
 This build requires python 3.10 and docker version 27.2.
+
 1. **Set dependencies and venv**
     
     On Linux/WSL use:
@@ -17,9 +18,9 @@ This build requires python 3.10 and docker version 27.2.
         pip install -r requirements.txt
 
 
-2. **Manage secrets**
+2. **Manage secrets and certificates**
 
-    Add .env file in the root directory.
+    Add .env file to the root directory.
 
     Create the proper SSL certificates to start deploying: on Linux/WSL, use:
 
@@ -30,6 +31,9 @@ This build requires python 3.10 and docker version 27.2.
             certbot/certbot certonly --standalone \
             --email your@email.com --agree-tos --no-eff-email \
             -d domain.duckdns.org
+        
+        certbot certonly --webroot -w /var/www/certbot \
+            -d domain.duckdns.org -d myowndomain.cat -d www.myowndomain.cat -d *.myowndomain.cat
 
 
 3. **Build the setup**
@@ -40,7 +44,7 @@ This build requires python 3.10 and docker version 27.2.
 
 4. **Set-up periodic updates** (optional)
 
-    Set up a crontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date.
+    Set up a crontab job that periodically runs ./scripts/naidd-update.sh so that everything is kept up to date. Do so as well for any other scripts to keep other repo-related stuff updated.
 
 
 

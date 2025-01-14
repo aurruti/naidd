@@ -15,6 +15,7 @@ services:
       - web
     depends_on:
       - website
+      # - despesapp
     restart: unless-stopped
     # Reload nginx every 6 hours to pick up any certificate changes
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
@@ -40,6 +41,15 @@ services:
     networks:
       - web
     restart: unless-stopped
+
+  # Despesapp container
+  # despesapp:
+  #   build:
+  #     context: ./despesapp
+  #     dockerfile: # TO-DO
+  #   networks:
+  #     - web
+  #   restart: unless-stopped
 
 networks:
   web:
