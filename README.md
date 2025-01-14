@@ -22,7 +22,7 @@ This build requires python 3.10 and docker version 27.2.
 
     Add .env file to the root directory.
 
-    Create the proper SSL certificates to start deploying: on Linux/WSL, use:
+    Create the proper SSL certificates to start deploying: on Linux/WSL, use (and do so for every domain used):
 
         docker run -it --rm \
             -v "$PWD/certbot/conf:/etc/letsencrypt" \
