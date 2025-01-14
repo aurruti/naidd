@@ -31,9 +31,6 @@ This build requires python 3.10 and docker version 27.2.
             certbot/certbot certonly --standalone \
             --email your@email.com --agree-tos --no-eff-email \
             -d domain.duckdns.org
-        
-        certbot certonly --webroot -w /var/www/certbot \
-            -d domain.duckdns.org -d myowndomain.cat -d www.myowndomain.cat -d *.myowndomain.cat
 
 
 3. **Build the setup**
