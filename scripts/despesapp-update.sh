@@ -29,7 +29,7 @@ if git diff --quiet HEAD origin/main; then
     if ! docker-compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
         echo "No changes to pull; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
         docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-        docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+        docker-compose -f "$DOCKER_COMPOSE_FILE" build || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
         docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
         docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
         echo "Deployment successful." >> "$LOG_FILE"
@@ -48,7 +48,7 @@ echo "Changes detected, starting redeployment process." >> "$LOG_FILE"
 
 # Pull and build
 docker-compose -f "$DOCKER_COMPOSE_FILE" pull despesapp || { echo "Failed to pull despesapp image." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" build despesapp --no-cache || { echo "Failed to build despesapp container." >> "$LOG_FILE"; exit 1; }
+docker-compose -f "$DOCKER_COMPOSE_FILE" build despesapp || { echo "Failed to build despesapp container." >> "$LOG_FILE"; exit 1; }
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
@@ -64,5 +64,5 @@ docker-compose -f "$DOCKER_COMPOSE_FILE" up -d despesapp || { echo "Failed to de
 # docker-compose ps | grep -q '(healthy)' || { echo "Containers not healthy" >> "$LOG_FILE"; exit 1; }
 
 # Cleanup
-docker image prune -f --filter "label=despesapp" || echo "Failed to cleanup images." >> "$LOG_FILE"
+docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
 echo "Deployment successful." >> "$LOG_FILE"
