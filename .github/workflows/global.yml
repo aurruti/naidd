@@ -43,7 +43,8 @@ jobs:
           -out certbot/conf/live/aurruti.cat/fullchain.pem \
           -subj '/CN=localhost'
         # Create empty .env file
-        touch despesapp/scripts/.env
+        cd despesapp/scripts
+        touch .env
 
     - name: Run Docker Compose
       run: |
