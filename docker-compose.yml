@@ -35,7 +35,7 @@ services:
 
   # Website container
   website:
-    build: 
+    build:
       context: ./website
       dockerfile: website.Dockerfile
     networks:
@@ -47,6 +47,8 @@ services:
     build:
       context: ./despesapp/services
       dockerfile: despesapp.Dockerfile
+    env_file:
+      - ./despesapp/services/.env
     networks:
       - web
     restart: unless-stopped
@@ -54,4 +56,3 @@ services:
 networks:
   web:
     driver: bridge
-  
