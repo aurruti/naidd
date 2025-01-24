@@ -19,18 +19,13 @@ jobs:
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2
 
-    - name: Install Docker Compose
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
-
     - name: Clone the required repositories
       run: |
         git clone https://github.com/aurruti/despesapp
 
     - name: Build Docker Image
       run: |
-        docker-compose build
+        docker compose build
 
     - name: Create Required Directories and Certificates
       run: |
@@ -45,12 +40,12 @@ jobs:
     
     - name: Create necessary (empty) .env files
       run: |
-        touch /home/runner/work/naidd/naidd/despesapp/services/.env
+        cp despesapp/services/env.txt despesapp/services/.env
 
     - name: Run Docker Compose
       run: |
-        docker-compose up -d
+        docker compose up -d
 
     - name: Run Docker Compose Down
       run: |
-        docker-compose down
+        docker compose down

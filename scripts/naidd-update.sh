@@ -26,11 +26,11 @@ git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FIL
 
 # Are changes significant?
 if git diff --quiet HEAD origin/main; then
-    if ! docker-compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
+    if ! docker compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
         echo "No changes to pull; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
-        docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-        docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
-        docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
         docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
         echo "Deployment successful." >> "$LOG_FILE"
     else
@@ -47,16 +47,16 @@ echo "Changes detected, starting redeployment process." >> "$LOG_FILE"
 # docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
 
 # Pull and build
-docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" build --no-cache || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" stop || { echo "Failed to stop containers." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" rm -f || { echo "Failed to remove old containers." >> "$LOG_FILE"; exit 1; }
 
 echo "Starting new containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to deploy new containers." >> "$LOG_FILE"; exit 1; }
 
 # TO-DO Health check
 # sleep 10  # Give containers time to start

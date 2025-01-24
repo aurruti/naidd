@@ -26,11 +26,11 @@ git fetch origin main || { echo "Failed to fetch from origin main." >> "$LOG_FIL
 
 # Are changes significant?
 if git diff --quiet HEAD origin/main; then
-    if ! docker-compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
+    if ! docker compose -f "$DOCKER_COMPOSE_FILE" ps -q | grep -q .; then
         echo "No changes to pull; but there are no containers running! Building and starting containers." >> "$LOG_FILE"
-        docker-compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
-        docker-compose -f "$DOCKER_COMPOSE_FILE" build || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
-        docker-compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" pull || { echo "Failed to pull new images." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" build || { echo "Failed to build containers." >> "$LOG_FILE"; exit 1; }
+        docker compose -f "$DOCKER_COMPOSE_FILE" up -d || { echo "Failed to start containers." >> "$LOG_FILE"; exit 1; }
         docker image prune -f || echo "Failed to cleanup images." >> "$LOG_FILE"
         echo "Deployment successful." >> "$LOG_FILE"
     else
@@ -47,16 +47,16 @@ echo "Changes detected, starting redeployment process." >> "$LOG_FILE"
 # docker-compose ps -q | xargs docker inspect --format='{{.Name}}' > previous_containers.txt 
 
 # Pull and build
-docker-compose -f "$DOCKER_COMPOSE_FILE" pull despesapp || { echo "Failed to pull despesapp image." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" build despesapp || { echo "Failed to build despesapp container." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" pull despesapp || { echo "Failed to pull despesapp image." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" build despesapp || { echo "Failed to build despesapp container." >> "$LOG_FILE"; exit 1; }
 
 # Deploy
 echo "Stopping and removing old containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" stop despesapp || { echo "Failed to stop despesapp container." >> "$LOG_FILE"; exit 1; }
-docker-compose -f "$DOCKER_COMPOSE_FILE" rm -f despesapp || { echo "Failed to remove despesapp container." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" stop despesapp || { echo "Failed to stop despesapp container." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" rm -f despesapp || { echo "Failed to remove despesapp container." >> "$LOG_FILE"; exit 1; }
 
 echo "Starting new containers." >> "$LOG_FILE"
-docker-compose -f "$DOCKER_COMPOSE_FILE" up -d despesapp || { echo "Failed to deploy new despesapp container." >> "$LOG_FILE"; exit 1; }
+docker compose -f "$DOCKER_COMPOSE_FILE" up -d despesapp || { echo "Failed to deploy new despesapp container." >> "$LOG_FILE"; exit 1; }
 
 # TO-DO Health check
 # sleep 10  # Give containers time to start

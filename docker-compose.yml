@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 services:
 
   # Nginx configuration
@@ -49,9 +49,15 @@ services:
       dockerfile: despesapp.Dockerfile
     env_file:
       - ./despesapp/services/.env
+    volumes:
+      - despesapp-db:/app/database
     networks:
       - web
     restart: unless-stopped
+
+volumes:
+  despesapp-db:
+    driver: local
 
 networks:
   web:
