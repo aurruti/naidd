@@ -37,10 +37,6 @@ jobs:
           -keyout certbot/conf/live/aurruti.cat/privkey.pem \
           -out certbot/conf/live/aurruti.cat/fullchain.pem \
           -subj '/CN=localhost'
-    
-    - name: Create necessary (empty) .env files
-      run: |
-        cp ./despesapp/services/env.txt ./despesapp/services/.env
 
     - name: Run Docker Compose
       run: |
