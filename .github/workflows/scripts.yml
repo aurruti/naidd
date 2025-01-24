@@ -20,13 +20,9 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up Docker
-      uses: docker/setup-buildx-action@v1
-      
-    - name: Install Docker Compose
+    - name: Create necessary (empty) .env files
       run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
+        cp ./despesapp/services/env.txt ./despesapp/services/.env
 
     - name: Clone Despesapp Repository
       run: |

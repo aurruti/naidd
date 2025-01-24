@@ -40,7 +40,7 @@ jobs:
     
     - name: Create necessary (empty) .env files
       run: |
-        cp despesapp/services/env.txt despesapp/services/.env
+        cp ./despesapp/services/env.txt ./despesapp/services/.env
 
     - name: Run Docker Compose
       run: |
